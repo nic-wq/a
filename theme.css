@@ -1,0 +1,43 @@
+:root {
+  --bg-color: #2d2d2d;
+  --text-color: #f0f0f0;
+  --border-color: #555555;
+  --accent-color: #4ec9b0;
+  --hover-color: #3a3a3a;
+  --tab-bg: #333333;
+  --command-bg: #404040;
+  --success-color: #4ec9b0;
+  --error-color: #f48771;
+  --help-color: #569cd6;
+  --suggestion-bg: #404040;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "Consolas", "Courier New", monospace;
+}
+
+.tab {
+  background-color: var(--tab-bg);
+}
+
+.tab.active {
+  background-color: var(--bg-color);
+}
+
+.tab:hover {
+  background-color: var(--hover-color);
+}
+
+.new-note-btn {
+  background-color: var(--accent-color);
+}
+
+.new-note-btn:hover {
+  background-color: #3daa97;
+}
+
+#noteArea {
+  font-family: "Consolas", "Courier New", monospace;
+}
