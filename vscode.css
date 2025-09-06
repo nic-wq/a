@@ -1,0 +1,344 @@
+        /* * MODERNIZED STYLES
+         * Key changes:
+         * - Refreshed color palette: Softer darks and a more vibrant accent color.
+         * - Improved typography: Using a system font stack for better cross-platform rendering.
+         * - Softer UI elements: Increased border-radius and use of subtle shadows instead of hard borders.
+         * - Enhanced interactivity: Added smooth transitions for hover and focus states.
+         * - Better spacing: Increased padding in key areas for a less cluttered look.
+        */
+        :root {
+            --bg-color: #18181b; /* Slightly softer black */
+            --bg-color-light: #27272a; /* Lighter background for elements */
+            --text-color: #e4e4e7; /* Lighter text for better contrast */
+            --border-color: rgba(255, 255, 255, 0.1); /* Subtle borders */
+            --accent-color: #3b82f6; /* A more modern, vibrant blue */
+            --accent-color-hover: #2563eb;
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --help-color: #a1a1aa;
+            --radius-md: 6px; /* Consistent border radius */
+            --radius-lg: 8px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Tabs */
+        .tab-container {
+            display: flex;
+            background-color: var(--bg-color);
+            padding: 0 10px;
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .new-note-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 6px 12px;
+            margin: 8px 0;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            align-self: center;
+            margin-left: 10px;
+            flex-shrink: 0;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .new-note-btn:hover {
+            background-color: var(--accent-color-hover);
+            transform: translateY(-1px);
+        }
+
+        .tab {
+            padding: 10px 25px 10px 15px;
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid transparent; /* For active indicator */
+            margin: 0 2px;
+            cursor: pointer;
+            color: var(--help-color);
+            position: relative;
+            white-space: nowrap;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .tab.active {
+            color: var(--text-color);
+            border-bottom-color: var(--accent-color);
+        }
+
+        .tab:hover {
+            color: var(--text-color);
+        }
+        
+        .tab-close {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 2px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+        }
+
+        .tab-close:hover {
+            background-color: var(--bg-color-light);
+        }
+
+        /* Editor Area */
+        .editor-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #noteArea {
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            box-sizing: border-box;
+            border: none;
+            resize: none;
+            font-size: 16px;
+            line-height: 1.7;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            outline: none;
+        }
+
+        /* Command Palette */
+        .command-palette {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            width: 600px;
+            max-width: 90vw;
+            background-color: var(--bg-color-light);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            display: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .command-palette.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        #commandInput {
+            width: 100%;
+            padding: 14px;
+            box-sizing: border-box;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-size: 16px;
+            outline: none;
+        }
+
+        .command-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .suggestion-item {
+            padding: 10px 14px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: var(--radius-md);
+            margin: 4px;
+            transition: background-color 0.15s ease;
+        }
+        
+        .suggestion-item:hover,
+        .suggestion-item.selected {
+            background-color: var(--accent-color);
+        }
+        
+        .suggestion-item:hover .title,
+        .suggestion-item.selected .title,
+        .suggestion-item:hover .detail,
+        .suggestion-item.selected .detail {
+            color: white;
+        }
+
+
+        .suggestion-item .title {
+            color: var(--text-color);
+        }
+
+        .suggestion-item .detail {
+            color: var(--help-color);
+            font-size: 0.9em;
+        }
+        
+        /* Status Bar */
+        #statusBar {
+            padding: 8px 15px;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            font-size: 13px;
+            color: var(--help-color);
+        }
+
+        .success { color: var(--success-color); }
+        .error { color: var(--error-color); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-color-light);
+            border-radius: 10px;
+            border: 2px solid var(--bg-color);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        /* Modal Dialog */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: var(--bg-color-light);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            width: 400px;
+            max-width: 90%;
+            box-shadow: var(--shadow-lg);
+            transform: scale(0.95);
+            transition: transform 0.2s ease;
+        }
+        
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header h3 {
+            margin: 0 0 15px 0;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .modal-body p {
+            margin: 0 0 20px 0;
+            color: var(--help-color);
+            line-height: 1.5;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-color);
+            font-size: 14px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .modal-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        
+        .modal-btn:hover {
+           transform: translateY(-1px);
+        }
+
+        .modal-btn-confirm {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .modal-btn-confirm:hover {
+            background-color: var(--accent-color-hover);
+        }
+
+        .modal-btn-cancel {
+            background-color: var(--bg-color-light);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .modal-btn-cancel:hover {
+            background-color: var(--border-color);
+        }
